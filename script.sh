@@ -91,6 +91,7 @@ bwa mem -t 6 ${assembly} ${read1} ${read2} | samtools view -b -@ 6 - > ${mapping
 samtools sort -@ 6 ${mapping_dir}/ERR204044.bam -o ${mapping_dir}/ERR204044.sorted.bam
 samtools index ${mapping_dir}/ERR204044.sorted.bam
 samtools stats ${mapping_dir}/ERR204044.sorted.bam > ${mapping_dir}/ERR204044_map_stats.txt
+bedtools genomecov -d -ibam /home/bioinformatikai/HW2/outputs/mapping/ERR204044.sorted.bam | awk '{c++}END{print c}'
 
 #Mapping SRR15131330
 
@@ -109,6 +110,7 @@ bwa mem -t 6 ${assembly} ${read1} ${read2} | samtools view -b -@ 6 - > ${mapping
 samtools sort -@ 6 ${mapping_dir}/SRR15131330.bam -o ${mapping_dir}/SRR15131330.sorted.bam
 samtools index ${mapping_dir}/SRR15131330.sorted.bam
 samtools stats ${mapping_dir}/SRR15131330.sorted.bam > ${mapping_dir}/SRR15131330_map_stats.txt
+bedtools genomecov -d -ibam /home/bioinformatikai/HW2/outputs/mapping/SRR15131330.sorted.bam | awk '{c++}END{print c}'
 
 #Mapping SRR18214264
 
@@ -127,6 +129,7 @@ bwa mem -t 6 ${assembly} ${read1} ${read2} | samtools view -b -@ 6 - > ${mapping
 samtools sort -@ 6 ${mapping_dir}/SRR18214264.bam -o ${mapping_dir}/SRR18214264.sorted.bam
 samtools index ${mapping_dir}/SRR18214264.sorted.bam
 samtools stats ${mapping_dir}/SRR18214264.sorted.bam > ${mapping_dir}/SRR18214264_map_stats.txt
+bedtools genomecov -d -ibam /home/bioinformatikai/HW2/outputs/mapping/SRR18214264.sorted.bam | awk '{c++}END{print c}'
 
 #Evaluate mapping fraction as well as genome coverage from mapped reads
 
@@ -139,6 +142,7 @@ samtools stats ${mapping_dir}/SRR18214264.sorted.bam > ${mapping_dir}/SRR1821426
 #Overall, these results indicate a successful mapping of the reads:
 #The quality score and the percentage of properly paired reads are rather high
 #And the error rate is low enough
+#The genome coverage for the mapped reads in the sample ERR204044 is 2046030.
 
 #SRR18214264
 
@@ -150,6 +154,7 @@ samtools stats ${mapping_dir}/SRR18214264.sorted.bam > ${mapping_dir}/SRR1821426
 #Eventhough the quality score is the lowest out of all it is still rather high
 #The error rate is significamtly bigger than others
 #However the percantage of properly paired reads is the highest out of all
+#The genome coverage for the mapped reads in the sample SRR18214264 is 2036064
 
 #SRR15131330
 
@@ -160,3 +165,4 @@ samtools stats ${mapping_dir}/SRR18214264.sorted.bam > ${mapping_dir}/SRR1821426
 #While the percentage of properly paired reads is the lowest out of all, it is still rather high
 #The error rate a bit higher than in ERR204044 
 #And the avarage quality is the highest out of all
+#The genome coverage for the mapped reads in the sample SRR15131330 is 1943393
