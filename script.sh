@@ -166,3 +166,120 @@ bedtools genomecov -d -ibam /home/bioinformatikai/HW2/outputs/mapping/SRR1821426
 #The error rate a bit higher than in ERR204044 
 #And the avarage quality is the highest out of all
 #The genome coverage for the mapped reads in the sample SRR15131330 is 1943393
+
+
+########################################################################################################################################
+
+#GEPARD results
+
+#ERR202044_SRR15131330_ragtag
+#The diagonal (top left corner to bottom right corner) from the coordinate starting point shows 
+#a direct correspondence and similarities between sequences. 
+#We also see small lines and dots on one side or the other, which probably won't have much biological significance. 
+#There are a few small gaps in the diagonal lines, indicating that the sequences in those positions do not correspond. 
+#We can also observe a rectangle in the bottom right corner, which indicates that there were duplicates at the end of sequences.
+
+#ERR204044_SRR18214264_RagTag
+As before, there is a diagonal starting from the starting point, indicating similarities between sequences. 
+#We also see small lines and dots on one side or the other. 
+#In this case, the gaps in the diagonal lines are a bit bigger. 
+#There is also a rectangle in the bottom right corner
+
+#SRR15131330_SRR18214264_RagTag
+#Here, the diagonal starts a bit to the right of the coordinate starting point. 
+#There are even bigger gaps here, but overall the diagonal is rather seamless. 
+#As before, there is a rectangle in the bottom right corner.
+
+#BUSCO results:
+
+#ERR204044:
+
+#Complete BUSCOs: 398 out of 402 searched
+#Complete and single-copy BUSCOs: 398 out of 402 searched
+#Fragmented BUSCOs: 2
+#Missing BUSCOs: 2
+#The ERR204044 assembly shows a high level of completeness, 
+#with the majority of BUSCOs being complete and single-copy. 
+#There are only a few fragmented and missing BUSCOs, indicating good overall quality.
+
+#SRR15131330:
+
+#Complete BUSCOs: 396 out of 402 searched
+#Complete and single-copy BUSCOs: 396 out of 402 searched
+#Fragmented BUSCOs: 2
+#Missing BUSCOs: 4
+#he SRR15131330 assembly also demonstrates a high level of completeness, 
+#with a similar number of complete and single-copy BUSCOs as the ERR204044 assembly. 
+#However, there are a few more missing BUSCOs, indicating some gaps in the assembly
+
+#SRR18214264:
+
+#Complete BUSCOs: 398 out of 402 searched
+#Complete and single-copy BUSCOs: 398 out of 402 searched
+#Fragmented BUSCOs: 2
+#Missing BUSCOs: 2
+#The SRR18214264 assembly exhibits a completeness level comparable to the ERR204044 assembly, 
+#with a high number of complete and single-copy BUSCOs. 
+#There are only a few fragmented and missing BUSCOs, indicating good quality.
+
+
+#Overall, the BUSCO results suggest that all three assemblies have a high degree of completeness, 
+#with the majority of the expected BUSCOs being present as complete and single-copy genes. 
+#The presence of fragmented and missing BUSCOs in some cases may indicate minor gaps or inaccuracies in the assemblies, 
+#but the overall quality seems satisfactory.
+
+makeblastdb -in /home/bioinformatikai/HW2/outputs/spades/ERR204044/contigs.fasta -dbtype prot -parse_seqids
+tblastn -db /home/bioinformatikai/HW2/outputs/spades/ERR204044/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_protein.faa > /home/bioinformatikai/HW2/outputs/blast/blast_ERR204044.rez
+tblastn -db /home/bioinformatikai/HW2/outputs/spades/ERR204044/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_protein.faa -out /home/bioinformatikai/HW2/outputs/blast/blast_ERR204044_tab.rez -outfmt 6
+awk -F'\t' '{print $1}' blast_ERR204044_tab.rez | sort -u | wc -l
+
+
+makeblastdb -in /home/bioinformatikai/HW2/outputs/spades/SRR15131330/contigs.fasta -dbtype prot -parse_seqids
+tblastn -db /home/bioinformatikai/HW2/outputs/spades/SRR15131330/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_protein.faa > /home/bioinformatikai/HW2/outputs/blast/blast_SRR15131330.rez
+tblastn -db /home/bioinformatikai/HW2/outputs/spades/SRR15131330/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_protein.faa -out /home/bioinformatikai/HW2/outputs/blast/blast_SRR15131330_tab.rez -outfmt 6
+awk -F'\t' '{print $1}' blast_SRR15131330_tab.rez| sort -u | wc -l
+
+makeblastdb -in /home/bioinformatikai/HW2/outputs/spades/SRR18214264/contigs.fasta -dbtype prot -parse_seqids
+tblastn -db /home/bioinformatikai/HW2/outputs/spades/SRR18214264/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_protein.faa > /home/bioinformatikai/HW2/outputs/blast/blast_SSRR18214264.rez
+tblastn -db /home/bioinformatikai/HW2/outputs/spades/SRR18214264/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_protein.faa -out /home/bioinformatikai/HW2/outputs/blast/blast_SSRR18214264_tab.rez -outfmt 6
+awk -F'\t' '{print $1}' blast_SSRR18214264_tab.rez| sort -u | wc -l
+
+makeblastdb -in /home/bioinformatikai/HW2/outputs/spades/ERR204044/contigs.fasta -dbtype nucl -parse_seqids
+blastn -db /home/bioinformatikai/HW2/outputs/spades/ERR204044/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_genomic.fna > /home/bioinformatikai/HW2/outputs/blast/blast_nucl_ERR204044.rez
+blastn -db /home/bioinformatikai/HW2/outputs/spades/ERR204044/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_genomic.fna -out /home/bioinformatikai/HW2/outputs/blast/blast_nucl_ERR204044_tab.rez -outfmt 6
+awk -F'\t' '{print $1}' blast_nucl_ERR204044_tab.rez | sort -u | wc -l
+awk '{ print $1 }' blast_nucl_ERR204044.rez | sort -u | wc -l
+
+makeblastdb -in /home/bioinformatikai/HW2/outputs/spades/SRR15131330/contigs.fasta -dbtype nucl -parse_seqids
+blastn -db /home/bioinformatikai/HW2/outputs/spades/SRR15131330/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_genomic.fna > /home/bioinformatikai/HW2/outputs/blast/blast_nucl_SRR15131330.rez
+blastn -db /home/bioinformatikai/HW2/outputs/spades/SRR15131330/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_genomic.fna -out /home/bioinformatikai/HW2/outputs/blast/blast_nucl_SRR15131330_tab.rez -outfmt 6
+awk -F'\t' '{print $1}' blast_nucl_SRR15131330_tab.rez | sort -u | wc -l
+awk '{ print $1 }' blast_nucl_SRR15131330.rez | sort -u | wc -l
+
+makeblastdb -in /home/bioinformatikai/HW2/outputs/spades/SRR18214264/contigs.fasta -dbtype nucl -parse_seqids
+blastn -db /home/bioinformatikai/HW2/outputs/spades/SRR18214264/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_genomic.fna > /home/bioinformatikai/HW2/outputs/blast/blast_nucl_SRR18214264.rez
+blastn -db /home/bioinformatikai/HW2/outputs/spades/SRR18214264/contigs.fasta -query /home/bioinformatikai/HW2/CP015498/GCF_022832545.1_ASM2283254v1_genomic.fna -out /home/bioinformatikai/HW2/outputs/blast/blast_nucl_SRR18214264_tab.rez -outfmt 6
+awk -F'\t' '{print $1}' blast_nucl_SRR18214264_tab.rez | sort -u | wc -l
+awk '{ print $1 }' blast_nucl_SRR18214264.rez | sort -u | wc -l
+
+
+#Gene predictions
+#ERR024044
+#Rast= 2494
+#Gene_Marks = 2311
+#Blast nucl = 1873
+
+#SRR15131330
+#Rast = 2698
+#Gene_Marks = 2550
+#Blast nucl = 2380
+
+#SRR18214264
+#Rast = 2451
+#Gene_Marks = 2338
+#Blast nucl = 1500
+
+#Overall RAST annotation generally predicted a higher number of genes 
+#compared to GeneMark and BLAST predictions. With sequence 
+#SRR15131330 the diference between gene predictions was least significant
+
