@@ -283,3 +283,12 @@ awk '{ print $1 }' blast_nucl_SRR18214264.rez | sort -u | wc -l
 #compared to GeneMark and BLAST predictions. With sequence 
 #SRR15131330 the diference between gene predictions was least significant
 
+#When analysing the RAST rings it is reasonable to say that SRR18214264 and ERR024044 were simmilar
+#Same is reflected in gene predictions, since the differance in numbers is mostly very miniscule
+#Rast 2494 and 2451, Gene_Marks 2311 and 2338, Blast_nucl 1873 and 1500
+#Similar trand can be noticed in Busco where the SRR18214264 assembly exhibites a completeness level comparable
+#to the ERR204044 assembly, with a high number of complete and single-copy BUSCOs. 
+#Even the genome fraction and dublication ratio were simmilar between these two samples
+#Based on the phylogenetic tree, SRR18214264 and ERR024044 are clustered together within the same clade, since they share a common branch point. 
+#This also suggests that they are more closely related to each other compared to other sequences in the tree. 
+#Thus, it is fair to say that SRR18214264  and ERR024044 are simmilar to one another
